@@ -1,0 +1,32 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.egg-info/
+dist/
+build/
+
+# Model weights — stored on HF Hub, never committed to Git
+*.pt
+*.pth
+*.onnx
+backend/weights/
+
+# Training artifacts — large files, not needed in Git
+training/datasets/
+training/runs/
+*.zip
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Frontend build output and dependencies
+frontend/dist/
+frontend/node_modules/
+
+# Misc
+.DS_Store
+Thumbs.db
+*.log
