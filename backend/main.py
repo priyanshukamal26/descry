@@ -1,5 +1,5 @@
 """
-Brand Vision FastAPI Application.
+Descry FastAPI Application.
 Entry point: uvicorn main:app --reload --port 8000
 """
 
@@ -18,7 +18,7 @@ from models.pipeline import get_pipeline
 # ---------------------------------------------------------------------------
 
 app = FastAPI(
-    title="Brand Vision API",
+    title="Descry API",
     description="Deep learning-based brand recognition and product category classification.",
     version="1.0.0",
 )
@@ -59,7 +59,7 @@ async def startup_event() -> None:
 
 @app.get("/")
 def root() -> dict:
-    return {"status": "ok", "message": "Brand Vision API is running"}
+    return {"status": "ok", "message": "Descry API is running"}
 
 
 @app.get("/health")

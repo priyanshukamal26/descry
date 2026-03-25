@@ -1,23 +1,27 @@
-# Core ML (for local training/export — NOT loaded in deployed backend)
-torch==2.2.0
-torchvision==0.17.0
-ultralytics==8.1.0          # YOLOv8
+# ──────────────────────────────────────────────────────────────
+# IMPORTANT: Install PyTorch FIRST with the CUDA wheel, then this file.
+# See README Quick Start for the exact pip command.
+# torch and torchvision are intentionally excluded here.
+# ──────────────────────────────────────────────────────────────
 
-# ONNX export & runtime (used in BOTH local and deployed backend)
-onnx==1.15.0
-onnxruntime==1.17.0
+# Core ML — YOLOv8 (torch/torchvision installed separately)
+ultralytics>=8.1.0
+
+# ONNX export & runtime
+onnx>=1.15.0
+onnxruntime>=1.17.0
 
 # API
-fastapi==0.109.0
-uvicorn[standard]==0.27.0
-python-multipart==0.0.9     # For file uploads
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
 
 # Image processing
-Pillow==10.2.0
-opencv-python-headless==4.9.0.80
-numpy==1.26.0
+Pillow>=10.2.0
+opencv-python-headless>=4.9.0.80
+numpy>=1.26.0
 
 # Utilities
-python-dotenv==1.0.0
-pydantic==2.5.0
-huggingface_hub==0.20.0
+python-dotenv>=1.0.0
+pydantic>=2.9.0
+huggingface_hub>=0.20.0
