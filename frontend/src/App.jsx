@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Uploader from './components/Uploader'
 import ResultCard from './components/ResultCard'
+import Sidebar from './components/Sidebar'
 import { predictImage } from './api/predict'
+import { User, Search } from 'lucide-react'
 
 export default function App() {
   const [result, setResult]     = useState(null)
@@ -12,10 +14,10 @@ export default function App() {
     setLoading(true)
     setError(null)
     setResult(null)
-
     try {
       const data = await predictImage(file)
-      setResult(data)
+      // Attach the local URL to display the 'SOURCE VISUAL'
+      setResult({ ...data, imageFile: file, localUrl: URL.createObjectURL(file) })
     } catch (err) {
       setError(err.message)
     } finally {
@@ -23,47 +25,33 @@ export default function App() {
     }
   }
 
+  const handleReset = () => setResult(null)
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12 px-4">
-      <div className="max-w-2xl mx-auto">
+    <div className="flex min-h-screen bg-[var(--color-brand-bg)] w-full text-black font-sans selection:bg-[var(--color-brand-purple)] selection:text-white">
+      <Sidebar />
+      
+      <main className="flex-1 flex flex-col h-screen overflow-y-auto relative">
+        {/* Top Header */}
+        <header className="h-[76px] border-b-[4px] border-black bg-white flex items-center justify-between px-10 sticky top-0 z-10 shrink-0">
+           <div className="flex gap-8 font-display font-black text-lg uppercase">
+              <span className="text-[var(--color-brand-purple)] underline decoration-[4px] underline-offset-[8px] cursor-pointer">SCANNER</span>
+           </div>
+           
 
-        {/* ── Header ───────────────────────────────────── */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-slate-800 tracking-tight">
-            Brand <span className="text-blue-600">Vision</span>
-          </h1>
-          <p className="text-gray-500 mt-2 text-lg">
-            Upload a product image to identify its brand and category
-          </p>
+        </header>
+
+        {/* Content Body */}
+        <div className="p-10 flex-1 w-full max-w-[1400px]">
+          {!result && (
+            <Uploader onImageSelect={handleImageSelect} isLoading={isLoading} error={error} />
+          )}
+
+          {result && !isLoading && (
+            <ResultCard result={result} onReset={handleReset} />
+          )}
         </div>
-
-        {/* ── Upload area ───────────────────────────────── */}
-        <div className="mb-6">
-          <Uploader onImageSelect={handleImageSelect} isLoading={isLoading} />
-        </div>
-
-        {/* ── Loading spinner ───────────────────────────── */}
-        {isLoading && (
-          <div className="text-center py-8">
-            <div className="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-            <p className="text-gray-500 mt-3 font-medium">Analysing image…</p>
-            <p className="text-gray-400 text-sm mt-1">
-              First request may take up to 30 s (model loading)
-            </p>
-          </div>
-        )}
-
-        {/* ── Error message ─────────────────────────────── */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl px-5 py-4 text-sm mb-6">
-            ⚠️ {error}
-          </div>
-        )}
-
-        {/* ── Result card ───────────────────────────────── */}
-        {result && <ResultCard result={result} />}
-
-      </div>
+      </main>
     </div>
   )
 }
