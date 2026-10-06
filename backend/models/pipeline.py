@@ -25,8 +25,10 @@ def ensure_weights() -> None:
     required_files = [
         "logo_detector.onnx",
         "category_classifier.onnx",
+        "category_classifier.onnx.data",
         "category_classifier_labels.json",
         "brand_classifier.onnx",
+        "brand_classifier.onnx.data",
         "brand_classifier_labels.json",
     ]
 
